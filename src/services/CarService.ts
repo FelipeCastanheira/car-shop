@@ -23,6 +23,12 @@ class CarService implements IService<ICar> {
     return car;
   }
 
+  public async read():Promise<ICar[]> {
+    const cars = await this._car.read();
+    if (!cars) throw new Error();
+    return cars;
+  }
+
   public async update(_id:string, obj:ICar):Promise<ICar | null> {
     const parsed = CarZod.safeParse(obj);
     if (!parsed.success) {
