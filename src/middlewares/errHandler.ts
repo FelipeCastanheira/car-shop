@@ -7,10 +7,12 @@ const errHandler: ErrorRequestHandler = (
   res,
   _next,
 ) => {
-  if (err instanceof ZodError) {  
-    return res.status(400).json({ message: err.issues });
-  }
-  return res.status(500).json({ message: err.message });
+  // if (err instanceof ZodError) {  
+  const { message } = err;
+  return res.status(400).json({ message });
+  
+  // }
+  // return res.status(500).json({ message: err.message });
 };
 
 export default errHandler;
