@@ -5,6 +5,7 @@ import { ICar } from '../interfaces/ICar';
 type ErrType = {
   error: string;
 };
+const error = 'Object not found';
 
 export default class CarController {
   constructor(private _service: IService<ICar>) { }
@@ -24,7 +25,6 @@ export default class CarController {
     res: Response<ICar | ErrType>,
   ) {
     const result = await this._service.readOne(req.params.id);
-    const error = 'Object not found';
     if (!result) return res.status(404).json({ error });
     return res.status(200).json(result);
   }
@@ -37,11 +37,21 @@ export default class CarController {
     return res.status(200).json(result);
   }
 
-  public async update(
-    req: Request,
-    res: Response<ICar | null>,
-  ) {
+  public async update(req: Request, res: Response<ICar | ErrType>) {
+    const exists = await this._service.readOne(req.params.id);
     const result = await this._service.update(req.params.id, req.body);
-    return res.status(201).json(result);
+    if (!exists || !result) return res.status(404).json({ error });
+    // const { buyValue, color, doorsQty, model, seatsQty, status, year } = result;
+    return res.status(200).json(result);
+    // return res.status(200).json({
+    //   _id: result._id,
+    //   buyValue,
+    //   color,
+    //   doorsQty,
+    //   model,
+    //   seatsQty,
+    //   status,
+    //   year,
+    // });
   }
 }
