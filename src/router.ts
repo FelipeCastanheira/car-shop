@@ -10,7 +10,7 @@ const carModel = new Car();
 const carService = new CarService(carModel);
 const carController = new CarController(carService);
 
-route.post('/cars', validCar, carController.create);
+route.post('/cars', validCar, (req, res) => carController.create(req, res));
 // route.get('/car/:id', carController.readOne);
 // route.put('/car/:id', carController.update);
 
