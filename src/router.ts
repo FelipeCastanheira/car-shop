@@ -20,5 +20,10 @@ route.put(
   validCar,
   (req, res) => carController.update(req, res),
 );
+route.delete(
+  '/cars/:id',
+  validId,
+  (req, res) => carController.delete(req, res),
+);
 
 export default route;
