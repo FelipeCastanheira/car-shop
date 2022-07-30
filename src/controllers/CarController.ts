@@ -9,9 +9,9 @@ export default class CarController {
     req: Request & { body: ICar }, 
     res: Response<ICar>,
   ) {
-    const { model, year, color, buyValue, seatsQty, doorsQty } = req.body;
-    const carBody = { model, year, color, buyValue, seatsQty, doorsQty };
-    const results = await this._service.create(carBody);
+    // const { model, year, color, buyValue, seatsQty, doorsQty } = req.body;
+    // const carBody = { model, year, color, buyValue, seatsQty, doorsQty };
+    const results = await this._service.create(req.body);
     return res.status(201).json(results);
   }
 
