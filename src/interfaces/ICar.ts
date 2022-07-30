@@ -6,6 +6,6 @@ const aditionalProps = {
   seatsQty: z.number().gt(1).lt(8),
 };
 
-const CarZod = VehicleZodSchema.extend(aditionalProps);
+export const CarZod = VehicleZodSchema.extend(aditionalProps);
 
 export type ICar = z.infer<typeof CarZod>;
