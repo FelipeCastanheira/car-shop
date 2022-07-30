@@ -2,7 +2,7 @@ import { ICar, CarZod } from '../interfaces/ICar';
 import IService from '../interfaces/IService';
 import { IModel } from '../interfaces/IModel';
 
-class CarService implements IService<ICar> { 
+class CarService implements IService<ICar> {
   private _car:IModel<ICar>;
 
   constructor(model:IModel<ICar>) {
@@ -10,10 +10,10 @@ class CarService implements IService<ICar> {
   }
 
   public async create(obj:ICar):Promise<ICar> {
-    const parsed = CarZod.safeParse(obj);
-    if (!parsed.success) {
-      throw parsed.error;
-    }
+    // const parsed = CarZod.safeParse(obj);
+    // if (!parsed.success) {
+    //   throw parsed.error;
+    // }
     return this._car.create(obj);
   }
 
