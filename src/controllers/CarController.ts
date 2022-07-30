@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import IService from '../interfaces/IService';
 import { ICar } from '../interfaces/ICar';
 
+type ErrType = {
+  error: string;
+};
+
 export default class CarController {
   constructor(private _service: IService<ICar>) { }
 
@@ -17,9 +21,11 @@ export default class CarController {
 
   public async readOne(
     req: Request,
-    res: Response<ICar>,
+    res: Response<ICar | ErrType>,
   ) {
     const result = await this._service.readOne(req.params.id);
+    const error = 'Object not found';
+    if (!result) return res.status(404).json({ error });
     return res.status(200).json(result);
   }
 
