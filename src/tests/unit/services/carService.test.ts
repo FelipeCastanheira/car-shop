@@ -11,6 +11,8 @@ describe('car Service', () => {
 
 	before(() => {
 		sinon.stub(carModel, 'create').resolves(carMockWithId);
+		sinon.stub(carModel, 'read').resolves([carMockWithId]);
+		sinon.stub(carModel, 'delete').resolves();
 		sinon.stub(carModel, 'readOne')
 			.onCall(0).resolves(carMockWithId) 
 			.onCall(1).resolves(null); 
@@ -32,6 +34,22 @@ describe('car Service', () => {
 			} catch (error) {
 				expect(error).to.be.instanceOf(ZodError);
 			}
+		});
+	});
+
+	describe('Read cars', () => {
+		it('Success', async () => {
+			const carsRead = await carService.read();
+
+			expect(carsRead).to.be.an('array');
+		});
+	});
+
+	describe('Delete a car', () => {
+		it('Success', async () => {
+			const result = await carService.delete(carMockWithId._id);
+
+			expect(result).to.not.be.an('array');
 		});
 	});
 

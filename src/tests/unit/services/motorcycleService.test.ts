@@ -11,6 +11,7 @@ describe('motorcycle Service', () => {
 
 	before(() => {
 		sinon.stub(motorcycleModel, 'create').resolves(motorcycleMockWithId);
+		sinon.stub(motorcycleModel, 'read').resolves([motorcycleMockWithId]);
 		sinon.stub(motorcycleModel, 'readOne')
 			.onCall(0).resolves(motorcycleMockWithId) 
 			.onCall(1).resolves(null); 
@@ -31,6 +32,14 @@ describe('motorcycle Service', () => {
 			} catch (error) {
 				expect(error).to.be.instanceOf(ZodError);
 			}
+		});
+	});
+
+	describe('Read motorcycles', () => {
+		it('Success', async () => {
+			const motorcyclesRead = await motorcycleService.read();
+
+			expect(motorcyclesRead).to.be.an('array');
 		});
 	});
 
